@@ -1,0 +1,18 @@
+{
+    "name": "browser-sample",
+    "version": "1.0.0",
+    "description": "",
+    "main": "main.js",
+    "scripts": {
+        "build": "browserify index.js -o bundle.js",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "@azure/app-configuration": "^1.4.1"
+    },
+    "devDependencies": {
+        "browserify": "^17.0.0"
+    }
+}
