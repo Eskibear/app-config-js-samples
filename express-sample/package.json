@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "@azure/app-configuration": "^1.4.1",
+    "app-config-js-provider": "file:../app-config-js-provider",
     "dotenv": "^16.0.3",
     "express": "^4.18.2"
   }
