@@ -8,6 +8,9 @@
 		},
 		{
 			"path": "express-sample"
+		},
+		{
+			"path": "react-nextjs-sample"
 		}
 	]
 }
