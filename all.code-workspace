@@ -1,0 +1,13 @@
+{
+    "folders": [
+		{
+			"path": "app-config-js-provider"
+		},
+		{
+			"path": "browse-sample"
+		},
+		{
+			"path": "express-sample"
+		}
+	]
+}
