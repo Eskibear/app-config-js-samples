@@ -3,23 +3,24 @@ import { TokenCredential } from "@azure/core-auth";
 import { SettingSelector } from ".";
 import { USER_AGENT } from "./constants";
 
-export class AzureAppConfigProvider {
+export class AzureAppConfigurationProvider {
     private _client: AppConfigurationClient;
     private _selects: SettingSelector[];
 
-    constructor(options: IProviderOptions) {
+    constructor(connectOptions: IConnectOptions, options?: IProviderOptions) {
         const clientOptions = {
             userAgentOptions: { userAgentPrefix: USER_AGENT }
         };
-        if (options.connectionString) {
-            this._client = new AppConfigurationClient(options.connectionString, clientOptions);
-        } else if (options.endpoint && options.credential) {
-            this._client = new AppConfigurationClient(options.endpoint, options.credential, clientOptions);
+        if (connectOptions.connectionString) {
+            this._client = new AppConfigurationClient(connectOptions.connectionString, clientOptions);
+        } else if (connectOptions.endpoint && connectOptions.credential) {
+            const { endpoint, credential } = connectOptions;
+            this._client = new AppConfigurationClient(endpoint, credential, clientOptions);
         } else {
-            throw new Error("Missing endpoint to create client.");
+            throw new Error("Missing endpoint specification in connection options to create a client.");
         }
 
-        if (options.selects && options.selects.length > 0) {
+        if (options?.selects && options.selects.length > 0) {
             this._selects = options.selects;
         } else {
             this._selects = [SettingSelector.DEFAULT_SELECTOR];
@@ -52,11 +53,12 @@ export class AzureAppConfigProvider {
     }
 }
 
-export interface IProviderOptions {
+export interface IConnectOptions {
     connectionString?: string;
-
     endpoint?: string;
     credential?: TokenCredential;
+}
 
+export interface IProviderOptions {
     selects?: SettingSelector[];
 }
