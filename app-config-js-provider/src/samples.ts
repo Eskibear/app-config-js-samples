@@ -22,9 +22,16 @@ async function filterSample() {
     const provider = new AzureAppConfigProvider({
         connectionString: AZURE_APP_CONFIG_CONNECTION_STRING
     }, {
-        selects: [{
-            keyFilter: "testApp.*",
-            labelFilter: "dev"
-        }]
+        selects: [{ keyFilter: "testApp.*", labelFilter: "dev" }]
+    });
+}
+
+// Trim key prefixes.
+async function trimKeyPrefixes() {
+    const provider = new AzureAppConfigProvider({
+        connectionString: AZURE_APP_CONFIG_CONNECTION_STRING
+    }, {
+        selects: [{ keyFilter: "testApp.*", labelFilter: "dev" }],
+        trimKeyPrefixes: ["testApp."]
     });
 }
