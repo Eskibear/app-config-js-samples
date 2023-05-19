@@ -7,6 +7,11 @@ export class AzureAppConfigurationProvider {
     private _client: AppConfigurationClient;
     private _selects: SettingSelector[];
 
+    /**
+     * Initialize client and options.
+     * @param connectOptions specify connection string or endpoint with credential to connect to Azure App Configuration.
+     * @param options  specify selects to filter configurations.
+     */
     constructor(connectOptions: IConnectOptions, options?: IProviderOptions) {
         const clientOptions = {
             userAgentOptions: { userAgentPrefix: USER_AGENT }
@@ -53,12 +58,18 @@ export class AzureAppConfigurationProvider {
     }
 }
 
+/**
+ * Connection options to connect to Azure App Configuration.
+ */
 export interface IConnectOptions {
     connectionString?: string;
     endpoint?: string;
     credential?: TokenCredential;
 }
 
+/**
+ * Provider options to filter configurations and other advanced features.
+ */
 export interface IProviderOptions {
     selects?: SettingSelector[];
 }
