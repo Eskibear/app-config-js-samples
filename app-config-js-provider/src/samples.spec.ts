@@ -46,3 +46,15 @@ async function trimKeyPrefixes_2() {
         .useTrimKeyPrefixes(["testApp."]);
     const provider = builder.build();
 }
+
+// Custom Client Options
+async function customClientOptions() {
+    const provider = new AzureAppConfigurationProvider({
+        connectionString: AZURE_APP_CONFIG_CONNECTION_STRING
+    }, {
+        clientOptions: {
+            userAgentOptions: { userAgentPrefix: "my-custom-user-agent" }, // Do we allow custom user agent?
+            retryOptions: { maxRetries: 5 }
+        }
+    });
+}

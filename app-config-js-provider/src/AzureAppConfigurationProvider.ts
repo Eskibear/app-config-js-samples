@@ -74,4 +74,5 @@ export interface IConnectOptions {
 export interface IProviderOptions {
     selects?: SettingSelector[];
     trimKeyPrefixes?: string[];
+    clientOptions?: AppConfigurationClientOptions;
 }
