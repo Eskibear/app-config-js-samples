@@ -1,4 +1,4 @@
-import { AppConfigurationClient, ConfigurationSetting } from "@azure/app-configuration";
+import { AppConfigurationClient, AppConfigurationClientOptions, ConfigurationSetting } from "@azure/app-configuration";
 import { TokenCredential } from "@azure/core-auth";
 import { SettingSelector } from ".";
 import { USER_AGENT } from "./constants";
@@ -14,7 +14,7 @@ export class AzureAppConfigurationProvider {
      * @param options  specify other options like selects and trimKeyPrefixes.
      */
     constructor(connectOptions: IConnectOptions, options?: IProviderOptions) {
-        const clientOptions = {
+        const clientOptions: AppConfigurationClientOptions = {
             userAgentOptions: { userAgentPrefix: USER_AGENT }
         };
         if (connectOptions.connectionString) {
@@ -53,13 +53,6 @@ export class AzureAppConfigurationProvider {
                     dict.set(setting.key, setting.value);
                 }
             }
-            
-            let config: IteratorResult<ConfigurationSetting<string>, any> | undefined;
-            do {
-                config = await settings.next();
-                
-            }
-            while(config && !config.done);
         }
         return dict;
 

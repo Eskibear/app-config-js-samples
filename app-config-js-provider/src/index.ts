@@ -1,2 +1,2 @@
-export { AzureAppConfigurationProvider as AzureAppConfigProvider, IProviderOptions} from "./AzureAppConfigurationProvider";
+export { AzureAppConfigurationProvider , IProviderOptions} from "./AzureAppConfigurationProvider";
 export { SettingSelector } from "./SettingSelector";
