@@ -5,16 +5,16 @@ import { USER_AGENT } from "./constants";
 
 /**
  * Load data from stores. 
- * @param connectOptions specify connection string or endpoint with credential to connect to Azure App Configuration.  
+ * @param connections specify connection string or endpoint with credential to connect to Azure App Configuration.  
  * @param options  specify preference to load configurations, e.g. selects to filter configurations, trimmed keys etc.
  * @returns A dict of stored configs.
  */
 export async function load(
-    connectOptions: IConnectOptions,
+    connections: IConnectOptions | IConnectOptions[],
     options?: IProviderOptions
 ): Promise<{[key: string]: any}> {
     // basic impl.
-    const provider = new AzureAppConfigurationProvider(connectOptions, options);
+    const provider = new AzureAppConfigurationProvider(connections, options);
     return provider.load();
 }
 
@@ -28,10 +28,19 @@ class AzureAppConfigurationProvider {
      * @param connectOptions specify connection string or endpoint with credential to connect to Azure App Configuration.
      * @param options  specify other options like selects and trimKeyPrefixes.
      */
-    constructor(connectOptions: IConnectOptions, options?: IProviderOptions) {
+    constructor(connections: IConnectOptions | IConnectOptions[], options?: IProviderOptions) {
         const clientOptions: AppConfigurationClientOptions = {
             userAgentOptions: { userAgentPrefix: USER_AGENT }
         };
+
+        let connectOptions;
+        if (Array.isArray(connections)) {
+            // geo-replica
+            connectOptions = connections[0]; // TODO: wrong, should impl geo-replica
+        } else {
+            connectOptions = connections;
+        }
+
         if (connectOptions.connectionString) {
             this._client = new AppConfigurationClient(connectOptions.connectionString, clientOptions);
         } else if (connectOptions.endpoint && connectOptions.credential) {
