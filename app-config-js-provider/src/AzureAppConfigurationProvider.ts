@@ -3,7 +3,22 @@ import { TokenCredential } from "@azure/core-auth";
 import { SettingSelector } from ".";
 import { USER_AGENT } from "./constants";
 
-export class AzureAppConfigurationProvider {
+/**
+ * Load data from stores. 
+ * @param connectOptions specify connection string or endpoint with credential to connect to Azure App Configuration.  
+ * @param options  specify preference to load configurations, e.g. selects to filter configurations, trimmed keys etc.
+ * @returns A dict of stored configs.
+ */
+export async function load(
+    connectOptions: IConnectOptions,
+    options?: IProviderOptions
+): Promise<{[key: string]: any}> {
+    // basic impl.
+    const provider = new AzureAppConfigurationProvider(connectOptions, options);
+    return provider.load();
+}
+
+class AzureAppConfigurationProvider {
     private _client: AppConfigurationClient;
     private _selects: SettingSelector[] = [SettingSelector.DEFAULT_SELECTOR];
     private _trimKeyPrefixes: string[] = [];

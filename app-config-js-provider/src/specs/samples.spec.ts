@@ -1,6 +1,6 @@
 // NOTE: this file won't be compiled into the package. Just for demo purpose.
 
-import { AzureAppConfigurationProvider } from "./";
+import { AzureAppConfigurationProvider } from "..";
 import { getDefaultAzureCredential } from "@azure/identity";
 
 const AZURE_APP_CONFIG_ENDPOINT = "https://myappconfig.azconfig.io";
