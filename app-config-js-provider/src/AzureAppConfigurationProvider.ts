@@ -99,4 +99,9 @@ export interface IProviderOptions {
     selects?: SettingSelector[];
     trimKeyPrefixes?: string[];
     clientOptions?: AppConfigurationClientOptions;
+    refreshOptions?: {
+        key: string;
+        refreshAll: boolean;
+        callback: (payload: {[key: string]:any}) => void;
+    }[]
 }
