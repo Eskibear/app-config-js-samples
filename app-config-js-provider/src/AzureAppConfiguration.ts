@@ -1,29 +1,13 @@
 import { AppConfigurationClient, AppConfigurationClientOptions } from "@azure/app-configuration";
-import { TokenCredential } from "@azure/core-auth";
-import { SettingSelector } from ".";
+import { SettingSelector } from "./SettingSelector";
 import { USER_AGENT } from "./constants";
-
-type Dictionary = { [key: string]: any };
-
-/**
- * Load data from stores.
- * @param connections Specify connection string or endpoint with credential to connect to Azure App Configuration.
- * @param options Specify preference to load configurations, e.g. selects to filter configurations, trimmed keys etc.
- * @returns A dict of stored configs.
- */
-export async function load(
-    connections: IConnectOptions, // TODO: IConnectOptions[], multiple endpoints to enable geo replica failover.
-    options?: IAzureAppConfigurationOptions
-): Promise<Dictionary> {
-    const provider = new AzureAppConfiguration(connections, options);
-    return await provider.load();
-}
+import { Dictionary, IAzureAppConfigurationOptions, IConnectOptions } from "./types";
 
 const DEFAULT_OPTIONS: IAzureAppConfigurationOptions = {
     // default
 };
 
-class AzureAppConfiguration {
+export class AzureAppConfiguration {
     private _client: AppConfigurationClient;
     private _options: IAzureAppConfigurationOptions;
     private _configs?: Map<string, any>;
@@ -85,27 +69,4 @@ class AzureAppConfiguration {
         return this._configs ? Object.fromEntries(this._configs.entries()) : {};
     }
 
-}
-
-/**
- * Connection options to connect to Azure App Configuration.
- */
-export interface IConnectOptions {
-    connectionString?: string;
-    endpoint?: string;
-    credential?: TokenCredential;
-}
-
-/**
- * Provider options to filter configurations and other advanced features.
- */
-export interface IAzureAppConfigurationOptions {
-    selects?: SettingSelector[];
-    trimKeyPrefixes?: string[];
-    clientOptions?: AppConfigurationClientOptions;
-    refreshOptions?: {
-        key: string;
-        refreshAll: boolean;
-        callback: (payload: { [key: string]: any }) => void;
-    }[]
 }
