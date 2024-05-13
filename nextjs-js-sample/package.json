@@ -6,7 +6,7 @@
     },
     "dependencies": {
         "@azure/app-configuration-provider": "file:azure-app-configuration-provider-0.1.0-preview.tgz",
-        "next": "^13.4.19",
+        "next": "^14.1.1",
         "react": "^18.2.0",
         "react-dom": "^18.2.0"
     }
